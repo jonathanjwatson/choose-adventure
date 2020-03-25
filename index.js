@@ -1,0 +1,1 @@
+console.log("Welcome to Choose Your Own Adventure!");
