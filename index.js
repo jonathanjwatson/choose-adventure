@@ -27,14 +27,40 @@ inquirer
     }
   ])
   .then(({ firstName, country, friendName }) => {
-    const openingSentence = `One day, as ${firstName} sat around ${country} with ${friendName} he decided they should go on a great and magical adventure.`;
+    const openingSentence = `One day, as ${firstName} sat around ${country} with ${friendName} he decided they should go on a great and magical adventure.\n`;
     fs.appendFile("story.txt", openingSentence, err => {
       if (err) {
         return console.log(err);
       }
       console.log("Your story has been written!");
+      packSupplies();
     });
   })
   .catch(err => {
     console.log(err);
   });
+
+const packSupplies = () => {
+  inquirer
+    .prompt([
+      {
+        type: "checkbox",
+        message: "Which supplies would you like to take?",
+        name: "supplies",
+        choices: ["Sleeping bag", "Tinder Box", "Machete", "Epipen"]
+      }
+    ])
+    .then(data => {
+      console.log(data);
+      const supplyList = `They decided to take a ${data.supplies.join(", ")}`;
+      fs.appendFile("story.txt", supplyList, err => {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Your story has been updated!");
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
